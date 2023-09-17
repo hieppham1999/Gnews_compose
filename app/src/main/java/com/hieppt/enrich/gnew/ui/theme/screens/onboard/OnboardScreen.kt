@@ -49,8 +49,11 @@ fun OnboardScreen(
 ) {
 
     val pagerState by viewModel.currentPageIndex.collectAsState()
+
     Box {
         SlideShowBackground(viewModel, pagerState)
+
+        // Footer
         Row(
             modifier = Modifier
                 .height(80.dp)
