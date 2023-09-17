@@ -2,6 +2,8 @@ package com.hieppt.enrich.gnew.ui.theme.screens.onboard
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.hieppt.enrich.gnew.R
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +15,7 @@ import javax.inject.Inject
 class OnboardViewModel @Inject constructor(): ViewModel(){
     @OptIn(ExperimentalFoundationApi::class)
     private val _pagerIndexState = MutableStateFlow(PagerState(0))
+    private var _isAutoScroll = mutableStateOf(true)
 
     val introData = listOf(
         OnboardIntroData(
@@ -38,6 +41,11 @@ class OnboardViewModel @Inject constructor(): ViewModel(){
     )
     @OptIn(ExperimentalFoundationApi::class)
     val currentPageIndex = _pagerIndexState.asStateFlow()
+    val isAutoScroll = _isAutoScroll.value
+
+    fun toggleAutoScroll(value: Boolean) {
+        _isAutoScroll.value = value
+    }
 }
 
 data class OnboardIntroData(

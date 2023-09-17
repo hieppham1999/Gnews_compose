@@ -1,5 +1,8 @@
 package com.hieppt.enrich.gnew.ui.theme.screens.onboard
 
+import android.annotation.SuppressLint
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -9,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,50 +34,81 @@ import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.ui.theme.poppinsFontFamily
-import com.hieppt.enrich.gnew.ui.theme.screenWidth
 import com.hieppt.enrich.gnew.ui.theme.screens.common.CirclePagerIndicator
 import com.hieppt.enrich.gnew.ui.theme.screens.onboard.composes.GettingStartedButton
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
+import kotlin.time.Duration
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardScreen(
     viewModel: OnboardViewModel = hiltViewModel()
 ) {
-
+    val scope = rememberCoroutineScope()
     val pagerState by viewModel.currentPageIndex.collectAsState()
+    var targetIndex by remember {
+        mutableStateOf(0)
+    }
+
+    suspend fun playBackground() {
+        delay(3500)
+        if (viewModel.isAutoScroll) {
+            targetIndex = (pagerState.currentPage + 1) % viewModel.introData.size
+            if (targetIndex != 0) {
+                pagerState.animateScrollToPage(targetIndex, animationSpec = tween(1500))
+            } else {
+                pagerState.animateScrollToPage(targetIndex, animationSpec = tween(500))
+            }
+        }
+    }
+
+    LaunchedEffect(pagerState.isScrollInProgress) {
+        val job = scope.launch {
+            if (!pagerState.isScrollInProgress && viewModel.isAutoScroll) {
+                playBackground()
+            } else {
+                return@launch
+            }
+        }
+
+        if (pagerState.isScrollInProgress) {
+            println(4)
+            job.cancelChildren()
+        }
+    }
+
     Box {
         HorizontalPager(
             pageCount = viewModel.introData.size,
             state = pagerState,
+            userScrollEnabled = false
         )
         {
             Box(
