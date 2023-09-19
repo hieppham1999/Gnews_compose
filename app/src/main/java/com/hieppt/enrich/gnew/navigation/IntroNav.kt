@@ -1,7 +1,10 @@
 package com.hieppt.enrich.gnew.navigation
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
+import com.hieppt.enrich.gnew.MainActivity
 import com.hieppt.enrich.gnew.ui.theme.screens.onboard.IntroState
 import com.hieppt.enrich.gnew.ui.theme.screens.onboard.nav.OnboardDestination
 import com.hieppt.enrich.gnew.ui.theme.screens.onboard.nav.onboardGraph
@@ -18,7 +21,12 @@ fun IntroNav(
         startDestination = OnboardDestination.route
     ) {
         onboardGraph(
-            onBack = {}
+            onButtonClicked = {
+                context.apply {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    (this as? Activity)?.finish()
+                }
+            }
         )
     }
 }

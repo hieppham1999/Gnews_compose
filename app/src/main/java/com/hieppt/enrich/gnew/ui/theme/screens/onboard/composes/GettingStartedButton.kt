@@ -29,7 +29,7 @@ import com.hieppt.enrich.gnew.ui.theme.poppinsFontFamily
 import com.hieppt.enrich.gnew.ui.theme.screenWidth
 
 @Composable
-fun GettingStartedButton() {
+fun GettingStartedButton(onClicked : ()-> Unit) {
     val shape = RoundedCornerShape(10.dp)
 
     Row(
@@ -44,9 +44,8 @@ fun GettingStartedButton() {
                     bounded = true,
                     color = Color.White
                 ),
-            ) {
-
-            }
+                onClick = onClicked
+            )
             .background(
                 Brush.horizontalGradient(
                     listOf(Color(0xFF2F2F2E), Color(0xFF2F2F2E).copy(alpha = 0f))

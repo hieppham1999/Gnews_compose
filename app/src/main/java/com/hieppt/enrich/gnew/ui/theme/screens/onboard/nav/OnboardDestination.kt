@@ -4,14 +4,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.ui.theme.screens.home.HomeScreen
+import com.hieppt.enrich.gnew.ui.theme.screens.onboard.OnboardScreen
 
 object OnboardDestination : NavigationDestination {
     override val route = "onboard_route"
     override val destination = "onboard_destination"
 }
 
-fun NavGraphBuilder.onboardGraph(onBack: () -> Unit) {
+fun NavGraphBuilder.onboardGraph(onButtonClicked: () -> Unit) {
     composable(route = OnboardDestination.route) {
-        HomeScreen(onBack = onBack)
+        OnboardScreen(onButtonClicked = onButtonClicked)
     }
 }

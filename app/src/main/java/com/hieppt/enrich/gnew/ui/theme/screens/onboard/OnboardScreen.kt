@@ -45,7 +45,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardScreen(
-    viewModel: OnboardViewModel = hiltViewModel()
+    viewModel: OnboardViewModel = hiltViewModel(),
+    onButtonClicked: () -> Unit
 ) {
 
     val pagerState by viewModel.currentPageIndex.collectAsState()
@@ -85,7 +86,7 @@ fun OnboardScreen(
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                GettingStartedButton()
+                GettingStartedButton(onClicked = onButtonClicked)
             }
         }
     }
@@ -184,8 +185,6 @@ private fun SlideShowBackground(
                     maxLines = 2
                 )
             }
-
-
         }
     }
 }
