@@ -6,7 +6,7 @@ import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.ui.theme.screens.home.HomeScreen
 
 object MyProfileDestination : NavigationDestination {
-    override val route = "notification_route"
+    override val route = "my_profile_route"
     override val destination = "my_profile_destination"
 }
 

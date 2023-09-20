@@ -4,8 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -14,6 +17,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.hieppt.enrich.gnew.navigation.NavigationDestination
@@ -67,12 +72,18 @@ fun BottomNavigationBar(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.White,
+                    indicatorColor = Color.Black,
                     selectedIconColor = tabSelectedColor,
                     unselectedIconColor = tabUnselectedColor
                 ),
                 icon = {
-
+                    Icon(
+                        painter = painterResource(id = destination.icon),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .height(17.dp),
+                        tint = Color.Green
+                    )
                 }
             )
         }

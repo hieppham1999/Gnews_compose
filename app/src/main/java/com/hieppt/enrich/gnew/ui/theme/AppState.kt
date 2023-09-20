@@ -31,19 +31,22 @@ class AppState(
         TopLevelDestination(
             HomeDestination.route,
             HomeDestination.destination,
-
+            icon = R.drawable.ic_home,
         ),
         TopLevelDestination(
             ExploreDestination.route,
             ExploreDestination.destination,
+            icon = R.drawable.ic_explore,
         ),
         TopLevelDestination(
             NotificationDestination.route,
             NotificationDestination.destination,
+            icon = R.drawable.ic_notification,
         ),
         TopLevelDestination(
             MyProfileDestination.route,
             MyProfileDestination.destination,
+            icon = R.drawable.ic_profile,
         )
     )
 
