@@ -39,6 +39,7 @@ class HomeViewModel @Inject constructor(private  val _repository: ArticleReposit
             val newHeadlines = getHighLightArticles(_screenState.value.category)
             if (newHeadlines != null) {
                 val list: MutableList<Article> = ArrayList()
+                newHeadlines.articles.forEach { _repository.insertArticleToDB(it) }
                 list.addAll(newHeadlines.articles)
                 _screenState.update { state ->
                     if (list.size < 10) {

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -164,22 +165,18 @@ private fun SlideShowBackground(
             ) {
                 Text(
                     text = viewModel.introData[it].title,
-                    fontSize = 30.sp,
-                    lineHeight = 46.sp,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = poppinsFontFamily,
-                    color = Color.White,
+                    style = MaterialTheme.typography.displayLarge,
                     modifier = Modifier
                         .fillMaxWidth(),
                     maxLines = 2
                 )
                 Text(
                     text = viewModel.introData[it].subtitle,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        lineHeight = 17.84.sp,
+                        fontWeight = FontWeight.W300,
+                    ),
                     lineHeight = 17.84.sp,
-                    fontWeight = FontWeight.W300,
-                    fontFamily = poppinsFontFamily,
-                    color = Color.White,
                     modifier = Modifier
                         .fillMaxWidth(),
                     maxLines = 2

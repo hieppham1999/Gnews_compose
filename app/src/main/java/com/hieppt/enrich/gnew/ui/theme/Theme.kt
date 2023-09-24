@@ -64,7 +64,7 @@ fun GnewsComposeTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = appTypography,
         content = content
     )
 }

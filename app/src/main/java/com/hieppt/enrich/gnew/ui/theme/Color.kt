@@ -12,3 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val tabSelectedColor = Color(0xFFBEDE61)
 val tabUnselectedColor = Color(0xFF787878)
+val textDefaultColor = Color.White
