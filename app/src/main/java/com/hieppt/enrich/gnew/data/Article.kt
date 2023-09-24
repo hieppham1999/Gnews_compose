@@ -1,5 +1,6 @@
 package com.hieppt.enrich.gnew.data
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
 data class Article(
@@ -8,6 +9,6 @@ data class Article(
     @field:SerializedName("content") val content: String,
     @field:SerializedName("url") val url: String,
     @field:SerializedName("image") val image: String,
-    @field:SerializedName("publishedAt") val publishedAt: List<String>,
+    @field:SerializedName("publishedAt") val publishedAt: String,
     @field:SerializedName("source") val source: ArticleSource,
 )

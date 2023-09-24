@@ -22,7 +22,12 @@ import com.hieppt.enrich.gnew.ui.theme.screenWidth
 import com.hieppt.enrich.gnew.ui.theme.screens.onboard.OnboardScreen
 
 @Composable
-fun CirclePagerIndicator(modifier: Modifier = Modifier, count: Int, selectedIndex: Int) {
+fun CirclePagerIndicator(
+    modifier: Modifier = Modifier,
+    count: Int,
+    selectedIndex: Int,
+    circleRadius: Double? = null
+) {
 
     LazyRow(
         modifier = modifier,
@@ -32,21 +37,22 @@ fun CirclePagerIndicator(modifier: Modifier = Modifier, count: Int, selectedInde
         items(
             count = count,
         ) { index ->
-            val baseCircleWidth = screenWidth() * 0.022
+            val baseCircleWidth = circleRadius?.times(2) ?: (screenWidth() * 0.022)
 
             if (index == selectedIndex) {
                 Image(
                     painter = painterResource(id = R.drawable.forward_button_circle),
                     modifier = Modifier.width(1.4 * baseCircleWidth.dp),
-                    contentDescription = null,)
+                    contentDescription = null,
+                )
             } else {
-                Box(modifier = Modifier
-                    .width(baseCircleWidth.dp)
-                    .aspectRatio(1f)
-                    .background(Color(0xFF4F4F4F), shape = CircleShape)
-                    .clip(CircleShape))
-
-
+                Box(
+                    modifier = Modifier
+                        .width(baseCircleWidth.dp)
+                        .aspectRatio(1f)
+                        .background(Color(0xFF4F4F4F), shape = CircleShape)
+                        .clip(CircleShape)
+                )
             }
         }
     }
