@@ -1,5 +1,9 @@
 package com.hieppt.enrich.gnew.ui.theme.screens.home
 
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,8 +16,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -21,6 +27,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabPosition
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -36,13 +46,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.data.Article
+import com.hieppt.enrich.gnew.data.NewsCategory
 import com.hieppt.enrich.gnew.ui.theme.screens.common.CirclePagerIndicator
+import com.hieppt.enrich.gnew.ui.theme.screens.home.compose.CategorySliderCard
+import com.hieppt.enrich.gnew.ui.theme.screens.home.compose.UserGreeting
+import com.hieppt.enrich.gnew.ui.theme.tabBackgroundColor
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
@@ -50,6 +66,12 @@ fun HomeScreen(
 ) {
 
     val screenState by viewModel.screenState.collectAsState()
+
+    val currentCategoryIndex = NewsCategory.values().indexOf(screenState.category)
+
+    val indicator = @Composable { tabPositions: List<TabPosition> ->
+        CustomIndicator(tabPositions,currentCategoryIndex )
+    }
 
     Column(
         modifier = Modifier
@@ -62,129 +84,61 @@ fun HomeScreen(
             header = screenState.category.displayName,
             onClick = {}
         )
-    }
-}
 
-@Composable
-fun UserGreeting(userName: String) {
-    Row(
-        modifier = Modifier
-            .background(Color.DarkGray)
-            .height(80.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column {
-            Text(
-                text = "Hello $userName",
-                style = MaterialTheme.typography.titleLarge.copy(lineHeight = 24.55.sp, fontWeight = FontWeight.W600)
-            )
-            Text(
-                text = "Have a nice day",
-                style = MaterialTheme.typography.labelMedium.copy(lineHeight = 16.37.sp, fontWeight = FontWeight.W400)
-            )
+        ScrollableTabRow (modifier = Modifier
+            .clip(RoundedCornerShape(8.dp)),
+            selectedTabIndex = screenState.category.ordinal, containerColor = Color.Green,
+            indicator = indicator
+            ) {
+            NewsCategory.values().forEachIndexed { index, category ->
+                Tab(modifier = Modifier.zIndex(6f),text = { Text(text = category.displayName) },
+                    selected = NewsCategory.values().indexOf(category) == index,
+                    onClick = { viewModel.updateCategoryTab(category) }
+                )
+            }
         }
-        Image(
-            painter = painterResource(id = R.drawable.ic_home),
-            modifier = Modifier
-                .clip(CircleShape)
-                .border(2.dp, Color.Black, CircleShape)
-                .width(40.dp)
-                .height(40.dp),
 
-            contentDescription = null
-        )
+
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CategorySliderCard(
-    listItem: List<Article>?,
-    header: String?,
-    onClick: (index: Int) -> Unit
-) {
-    val pagerState = rememberPagerState(initialPage = 0)
+private fun CustomIndicator(tabPositions: List<TabPosition>, currentPage: Int) {
+    val transition = updateTransition(currentPage)
+    val indicatorStart by transition.animateDp(
+        transitionSpec = {
+            if (initialState < targetState) {
+                spring(dampingRatio = 1f, stiffness = 50f)
+            } else {
+                spring(dampingRatio = 1f, stiffness = 1000f)
+            }
+        }, label = ""
+    ) {
+        tabPositions[it].left
+    }
+
+    val indicatorEnd by transition.animateDp(
+        transitionSpec = {
+            if (initialState < targetState) {
+                spring(dampingRatio = 1f, stiffness = 1000f)
+            } else {
+                spring(dampingRatio = 1f, stiffness = 50f)
+            }
+        }, label = ""
+    ) {
+        tabPositions[it].right
+    }
 
     Box(
-        modifier = Modifier
-            .height(100.dp)
-            .clickable(onClick = { onClick(pagerState.currentPage) })
-            .clip(RoundedCornerShape(23.dp))
-    ) {
-
-        val pageCount = listItem?.size ?: 0
-
-        HorizontalPager(
-            state = pagerState, pageCount = pageCount
-        ) { page ->
-            SubcomposeAsyncImage(model = ImageRequest.Builder(LocalContext.current)
-                .data(listItem?.get(page)?.image ?: "")
-                .crossfade(true)
-                .build(),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                loading = {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .matchParentSize()
-                            .align(Alignment.Center)
-                    )
-                },
-                error = {
-                    Image(
-                        painter = painterResource(
-                            id = R.drawable.img_article_placeholder
-                        ), contentDescription = null,
-                        contentScale = ContentScale.FillWidth
-
-                    )
-                })
-
-        }
-
-
-
-        Box(
-            modifier = Modifier
-                .matchParentSize()
-                .background(
-                    Brush.verticalGradient(
-                        0.4F to Color.Transparent,
-                        0.8F to Color(0xFF24251E).copy(alpha = 0.77F),
-                        1F to Color(0xFF25261F)
-                    )
-                )
-        )
-        Column(
-            modifier = Modifier
-                .padding(bottom = 7.dp)
-                .fillMaxSize(),
-
-
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
-
-        ) {
-            header?.uppercase()?.let {
-                Text(
-                    text = it, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-            CirclePagerIndicator(
-                modifier = Modifier
-                    .width(
-                        60.dp
-                    )
-                    .height(10.dp),
-                count = pageCount,
-                circleRadius = 3.0,
-                selectedIndex = pagerState.currentPage
-            )
-        }
-    }
+        Modifier
+            .offset(x = indicatorStart)
+            .wrapContentSize(align = Alignment.BottomStart)
+            .width(indicatorEnd - indicatorStart)
+            .padding(2.dp)
+            .fillMaxSize()
+            .background(color = Color(0xFFFF7455), RoundedCornerShape(50))
+            .border(BorderStroke(2.dp, Color(0xFFC13D25)), RoundedCornerShape(50))
+            .zIndex(1f)
+    )
 }

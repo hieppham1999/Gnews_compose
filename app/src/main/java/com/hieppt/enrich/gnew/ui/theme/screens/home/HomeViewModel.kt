@@ -54,6 +54,12 @@ class HomeViewModel @Inject constructor(private  val _repository: ArticleReposit
         }
     }
 
+    @OptIn(ExperimentalFoundationApi::class)
+    fun updateCategoryTab(category: NewsCategory) {
+        _screenState.update { state ->
+            state.copy(category = category)
+        }
+    }
 
     private suspend fun getHighLightArticles(category: NewsCategory): ArticleList? {
         val result = _repository.getTopHeadline(category = category)
