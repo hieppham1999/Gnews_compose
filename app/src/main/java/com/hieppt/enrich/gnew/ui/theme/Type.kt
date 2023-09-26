@@ -99,6 +99,14 @@ val appTypography = Typography(
         letterSpacing = 0.25.sp,
         color = textDefaultColor
     ),
+    bodySmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.W300,
+        fontSize = 10.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.25.sp,
+        color = textDefaultColor
+    ),
     labelMedium = TextStyle(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.SemiBold,

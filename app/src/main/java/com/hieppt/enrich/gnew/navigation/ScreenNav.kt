@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
+import com.google.gson.Gson
+import com.hieppt.enrich.gnew.data.Article
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.ArticleDetailDestination
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.detailGraph
 import com.hieppt.enrich.gnew.ui.screens.discover.nav.exploreGraph
@@ -14,6 +16,8 @@ import com.hieppt.enrich.gnew.ui.screens.my_profile.nav.myProfileGraph
 import com.hieppt.enrich.gnew.ui.screens.notification.nav.notificationGraph
 import com.hieppt.enrich.gnew.ui.theme.AppState
 import com.hieppt.enrich.gnew.ui.theme.rememberAppState
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @Composable
@@ -27,7 +31,9 @@ fun ScreenNav(
     ) {
         homeGraph(
             { appState.back() },
-            { it -> appState.navController.navigate(ArticleDetailDestination.route + "/${it?.url}") },
+            { it ->
+                var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
+                appState.navController.navigate(ArticleDetailDestination.route + "/data/${encode}") },
         )
         exploreGraph {
             appState.back()

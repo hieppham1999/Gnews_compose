@@ -81,7 +81,7 @@ fun HomeScreen(
 
         HeaderWithTextButton(onClick = {})
 
-        ArticleVerticalCard(article = screenState.headlines?.get(0), onClick = {})
+        ArticleVerticalCard(article = screenState.headlines?.get(0), onClick = { onItemClick(screenState.headlines?.get(0))})
 
         ArticleHorizontalCard(article = screenState.headlines?.get(0), onClick = {
             onItemClick(screenState.headlines?.get(0))

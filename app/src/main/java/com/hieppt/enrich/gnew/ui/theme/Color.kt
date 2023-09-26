@@ -14,5 +14,8 @@ val tabBackgroundColor = Color(0xFF30312D)
 val highlightColor = Color(0xFFBEDE61)
 val tabUnselectedColor = Color(0xFF787878)
 val textDefaultColor = Color.White
+val textColor2 = Color(0xFFFEC158)
 val cardBackgroundColor = Color(0xFF363636)
 val backgroundColor = Color(0xFF13140D)
+
+val dividerColor = Color(0xFFC4C4C4)
