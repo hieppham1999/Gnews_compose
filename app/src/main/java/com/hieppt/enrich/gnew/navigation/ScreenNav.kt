@@ -7,6 +7,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import com.hieppt.enrich.gnew.ui.theme.AppState
 import com.hieppt.enrich.gnew.ui.theme.rememberAppState
+import com.hieppt.enrich.gnew.ui.theme.screens.article_detail.nav.ArticleDetailDestination
+import com.hieppt.enrich.gnew.ui.theme.screens.article_detail.nav.detailGraph
 import com.hieppt.enrich.gnew.ui.theme.screens.discover.nav.exploreGraph
 import com.hieppt.enrich.gnew.ui.theme.screens.home.nav.HomeDestination
 import com.hieppt.enrich.gnew.ui.theme.screens.home.nav.homeGraph
@@ -22,13 +24,16 @@ fun ScreenNav(
         navController = appState.navController,
         startDestination = HomeDestination.route
     ) {
-        homeGraph {
-            appState.back()
-        }
+        homeGraph(
+            { appState.back() },
+            { it -> appState.navController.navigate(ArticleDetailDestination.route + "/${it?.url}") },
+        )
         exploreGraph {
             appState.back()
         }
         notificationGraph { appState.back() }
         myProfileGraph { appState.back() }
+        detailGraph { appState.back() }
+
     }
 }

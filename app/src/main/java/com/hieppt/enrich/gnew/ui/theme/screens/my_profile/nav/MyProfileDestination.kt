@@ -14,6 +14,5 @@ fun NavGraphBuilder.myProfileGraph(
     onBack: () -> Unit
 ) {
     composable(route = MyProfileDestination.route) {
-        HomeScreen(onBack = onBack)
     }
 }

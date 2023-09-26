@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -25,8 +24,9 @@ import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.navigation.ScreenNav
 import com.hieppt.enrich.gnew.navigation.TopLevelDestination
 import com.hieppt.enrich.gnew.ui.theme.GnewsComposeTheme
+import com.hieppt.enrich.gnew.ui.theme.backgroundColor
 import com.hieppt.enrich.gnew.ui.theme.rememberAppState
-import com.hieppt.enrich.gnew.ui.theme.tabSelectedColor
+import com.hieppt.enrich.gnew.ui.theme.highlightColor
 import com.hieppt.enrich.gnew.ui.theme.tabUnselectedColor
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) {
-                    Surface(modifier = Modifier.padding(it)) {
+                    Surface(color = backgroundColor, modifier = Modifier.padding(it)) {
                         ScreenNav(appState)
                     }
                 }
@@ -64,16 +64,17 @@ fun BottomNavigationBar(
     currentDestination: NavDestination?
 ) {
     NavigationBar(
-        containerColor = Color.White
+        containerColor = backgroundColor
     ) {
         items.forEach { destination ->
+
             val selected = currentDestination?.hierarchy?.any { it.route == destination.route } == true
             NavigationBarItem(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.Black,
-                    selectedIconColor = tabSelectedColor,
+                    indicatorColor = Color.Transparent,
+                    selectedIconColor = highlightColor,
                     unselectedIconColor = tabUnselectedColor
                 ),
                 icon = {
@@ -81,8 +82,8 @@ fun BottomNavigationBar(
                         painter = painterResource(id = destination.icon),
                         contentDescription = null,
                         modifier = Modifier
-                            .height(17.dp),
-                        tint = Color.Green
+                            .height(if (selected) 20.dp else 15.dp ),
+//                        tint = highlightColor
                     )
                 }
             )

@@ -14,6 +14,5 @@ fun NavGraphBuilder.exploreGraph(
     onBack: () -> Unit
 ) {
     composable(route = ExploreDestination.route) {
-        HomeScreen(onBack = onBack)
     }
 }

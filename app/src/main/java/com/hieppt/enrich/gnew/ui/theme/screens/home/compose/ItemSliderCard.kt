@@ -78,11 +78,7 @@ fun CategorySliderCard(
 
                     )
                 })
-
         }
-
-
-
         Box(
             modifier = Modifier
                 .matchParentSize()

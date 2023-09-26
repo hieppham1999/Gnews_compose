@@ -2,6 +2,7 @@ package com.hieppt.enrich.gnew.ui.theme.screens.home.nav
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.hieppt.enrich.gnew.data.Article
 import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.ui.theme.screens.home.HomeScreen
 
@@ -11,9 +12,10 @@ object HomeDestination : NavigationDestination {
 }
 
 fun NavGraphBuilder.homeGraph(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onItemClick: (article :Article?) -> Unit
 ) {
     composable(route = HomeDestination.route) {
-        HomeScreen(onBack = onBack)
+        HomeScreen(onBack = onBack, onItemClick = onItemClick)
     }
 }

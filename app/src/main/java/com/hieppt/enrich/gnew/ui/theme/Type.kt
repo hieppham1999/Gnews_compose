@@ -36,7 +36,7 @@ val Typography = Typography(
 )
 val poppinsFontFamily = FontFamily(
     Font(R.font.poppins_light, FontWeight.Light),
-    Font(R.font.poppins_regular, FontWeight.Normal,),
+    Font(R.font.poppins_regular, FontWeight.Normal),
     Font(R.font.poppins_medium, FontWeight.Medium),
     Font(R.font.poppins_bold, FontWeight.Bold),
     Font(R.font.poppins_semi_bold, FontWeight.SemiBold)
@@ -64,6 +64,22 @@ val appTypography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         lineHeight = 28.sp,
+        letterSpacing = 0.sp,
+        color = textDefaultColor
+    ),
+    titleMedium = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.sp,
+        color = textDefaultColor
+    ),
+    titleSmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.sp,
         color = textDefaultColor
     ),
