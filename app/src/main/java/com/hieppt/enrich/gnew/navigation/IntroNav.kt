@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import com.hieppt.enrich.gnew.MainActivity
-import com.hieppt.enrich.gnew.ui.theme.screens.onboard.IntroState
-import com.hieppt.enrich.gnew.ui.theme.screens.onboard.nav.OnboardDestination
-import com.hieppt.enrich.gnew.ui.theme.screens.onboard.nav.onboardGraph
-import com.hieppt.enrich.gnew.ui.theme.screens.onboard.rememberIntroState
+import com.hieppt.enrich.gnew.ui.screens.onboard.IntroState
+import com.hieppt.enrich.gnew.ui.screens.onboard.nav.OnboardDestination
+import com.hieppt.enrich.gnew.ui.screens.onboard.nav.onboardGraph
+import com.hieppt.enrich.gnew.ui.screens.onboard.rememberIntroState
 
 @Composable
 fun IntroNav(

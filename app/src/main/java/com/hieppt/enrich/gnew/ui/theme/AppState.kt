@@ -10,10 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.navigation.TopLevelDestination
-import com.hieppt.enrich.gnew.ui.theme.screens.discover.nav.ExploreDestination
-import com.hieppt.enrich.gnew.ui.theme.screens.home.nav.HomeDestination
-import com.hieppt.enrich.gnew.ui.theme.screens.my_profile.nav.MyProfileDestination
-import com.hieppt.enrich.gnew.ui.theme.screens.notification.nav.NotificationDestination
+import com.hieppt.enrich.gnew.ui.screens.discover.nav.ExploreDestination
+import com.hieppt.enrich.gnew.ui.screens.home.nav.HomeDestination
+import com.hieppt.enrich.gnew.ui.screens.my_profile.nav.MyProfileDestination
+import com.hieppt.enrich.gnew.ui.screens.notification.nav.NotificationDestination
 
 @Composable
 fun rememberAppState(

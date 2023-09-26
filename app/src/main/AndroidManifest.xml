@@ -17,7 +17,7 @@
         android:theme="@style/Theme.GnewsCompose"
         tools:targetApi="31">
         <activity
-            android:name=".ui.theme.screens.onboard.IntroActivity"
+            android:name=".ui.screens.onboard.IntroActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.GnewsCompose">
