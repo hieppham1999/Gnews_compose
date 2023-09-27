@@ -7,14 +7,21 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabPosition
@@ -66,12 +73,12 @@ fun HomeScreen(
             header = screenState.category.displayName,
             onClick = {}
         )
-
         ScrollableTabRow(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .padding(top = 20.dp),
+                .padding(top = 20.dp, bottom = 4.dp),
             divider = {},
+            edgePadding = 0.dp,
             selectedTabIndex = screenState.category.ordinal, containerColor = tabBackgroundColor,
             indicator = indicator
         ) {
@@ -83,14 +90,31 @@ fun HomeScreen(
             }
         }
 
-        HeaderWithTextButton(onClick = {})
+        Column(
+            modifier = Modifier
+                .verticalScroll(state = rememberScrollState())
+        ) {
+            HeaderWithTextButton(modifier = Modifier
+                .padding(vertical = 8.dp), onClick = {})
 
-        ArticleVerticalCard(article = screenState.headlines?.get(0), onClick = { onItemClick(screenState.headlines?.get(0))})
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                items(screenState.headlines ?: listOf()) { article ->
+                    ArticleVerticalCard(article = article, onClick = { onItemClick(article) })
+                }
+            }
 
-        ArticleHorizontalCard(article = screenState.headlines?.get(0), onClick = {
-            onItemClick(screenState.headlines?.get(0))
-        })
+            HeaderWithTextButton(modifier = Modifier
+                .padding(vertical = 8.dp), onClick = {})
 
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+
+                screenState.headlines?.forEachIndexed { index, article ->
+                    ArticleHorizontalCard(article = article, onClick = {
+                        onItemClick(article)
+                    })
+                }
+            }
+        }
     }
 }
 

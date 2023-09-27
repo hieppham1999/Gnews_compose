@@ -27,7 +27,7 @@ import com.hieppt.enrich.gnew.R
 fun UserGreeting(userName: String) {
     Row(
         modifier = Modifier
-            .background(Color.DarkGray)
+            .background(Color.Transparent)
             .height(80.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
