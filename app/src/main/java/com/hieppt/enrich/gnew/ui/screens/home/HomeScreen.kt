@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -69,6 +70,8 @@ fun HomeScreen(
     ) {
         UserGreeting(userName = "Hiep")
         CategorySliderCard(
+            modifier = Modifier
+                .fillMaxHeight(0.25F),
             listItem = screenState.headlines?.subList(0, 4),
             header = screenState.category.displayName,
             onClick = {}
@@ -108,7 +111,7 @@ fun HomeScreen(
 
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-                screenState.headlines?.forEachIndexed { index, article ->
+                screenState.headlines?.forEachIndexed { _, article ->
                     ArticleHorizontalCard(article = article, onClick = {
                         onItemClick(article)
                     })

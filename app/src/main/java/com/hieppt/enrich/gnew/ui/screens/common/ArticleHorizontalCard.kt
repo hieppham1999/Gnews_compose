@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,32 +58,14 @@ fun ArticleHorizontalCard(
             ),
 
         ) {
-        SubcomposeAsyncImage(modifier = Modifier
-            .clip(RoundedCornerShape(borderRadius))
-            .fillMaxHeight()
-            .weight(0.4F),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(article?.image)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
-            loading = {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .align(Alignment.Center)
-                )
-            },
-            error = {
-                Image(
-                    painter = painterResource(
-                        id = R.drawable.img_article_placeholder
-                    ), contentDescription = null,
-                    contentScale = ContentScale.FillHeight
 
-                )
-            }
+        AppAsyncImage(
+            modifier = Modifier
+                .clip(RoundedCornerShape(borderRadius))
+                .fillMaxHeight()
+                .weight(0.4F),
+            url = article?.image,
+            contentScale = ContentScale.FillHeight
         )
         Column(
             modifier = Modifier

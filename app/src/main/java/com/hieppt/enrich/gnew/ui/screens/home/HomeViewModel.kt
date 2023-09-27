@@ -59,6 +59,8 @@ class HomeViewModel @Inject constructor(private  val _repository: ArticleReposit
         _screenState.update { state ->
             state.copy(category = category)
         }
+
+        updateHeadlines()
     }
 
     private suspend fun getHighLightArticles(category: NewsCategory): ArticleList? {

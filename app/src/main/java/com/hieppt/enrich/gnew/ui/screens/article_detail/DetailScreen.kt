@@ -1,31 +1,24 @@
 package com.hieppt.enrich.gnew.ui.screens.article_detail
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
@@ -41,7 +34,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -51,12 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.ImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
 import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.data.Article
-import com.hieppt.enrich.gnew.data.NewsCategory
 import com.hieppt.enrich.gnew.ui.screens.common.AppAsyncImage
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
 import com.hieppt.enrich.gnew.ui.theme.dividerColor
@@ -78,25 +66,12 @@ fun DetailScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        SubcomposeAsyncImage(modifier = Modifier.fillMaxSize(),
-            model = ImageRequest.Builder(LocalContext.current).data(screenState.article?.image).crossfade(true).build(),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
-            loading = {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .align(Alignment.Center)
-                )
-            },
-            error = {
-                Image(
-                    painter = painterResource(
-                        id = R.drawable.img_article_placeholder
-                    ), contentDescription = null, contentScale = ContentScale.FillHeight
-
-                )
-            })
+        AppAsyncImage(
+            modifier = Modifier
+                .fillMaxSize(),
+            url = screenState.article?.image,
+            contentScale = ContentScale.FillHeight
+        )
 
         FloatingActionButton(modifier = Modifier
             .align(Alignment.TopStart)

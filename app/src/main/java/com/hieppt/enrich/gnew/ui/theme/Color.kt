@@ -21,4 +21,6 @@ val cardBackgroundColor = Color(0xFF363636)
 val backgroundColor = Color(0xFF13140D)
 val fabColor = Color(0xFF27272747)
 
+val boxColor = Color(0xFFF4C41A)
+
 val dividerColor = Color(0xFFC4C4C4)

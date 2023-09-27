@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -59,31 +60,12 @@ fun ArticleVerticalCard(
         colors = cardColors(containerColor = cardBackgroundColor)
 
     ) {
-        SubcomposeAsyncImage(modifier = Modifier
-            .aspectRatio(1.0F)
-            .clip(RoundedCornerShape(borderRadius.value.times(0.75).dp)),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(article?.image)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
-            loading = {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .align(Alignment.Center)
-                )
-            },
-            error = {
-                Image(
-                    painter = painterResource(
-                        id = R.drawable.img_article_placeholder
-                    ), contentDescription = null,
-                    contentScale = ContentScale.FillHeight
-
-                )
-            }
+        AppAsyncImage(
+            modifier = Modifier
+                .aspectRatio(1.0F)
+                .clip(RoundedCornerShape(borderRadius.value.times(0.75).dp)),
+            url = article?.image,
+            contentScale = ContentScale.FillHeight
         )
         Column(
             modifier = Modifier

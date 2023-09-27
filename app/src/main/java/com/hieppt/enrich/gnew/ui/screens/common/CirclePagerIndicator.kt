@@ -40,7 +40,7 @@ fun CirclePagerIndicator(
             if (index == selectedIndex) {
                 Image(
                     painter = painterResource(id = R.drawable.forward_button_circle),
-                    modifier = Modifier.width(1.4 * baseCircleWidth.dp),
+                    modifier = Modifier.width(1.8 * baseCircleWidth.dp),
                     contentDescription = null,
                 )
             } else {
