@@ -3,8 +3,10 @@ package com.hieppt.enrich.gnew.navigation
 import android.app.Activity
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.gson.Gson
 import com.hieppt.enrich.gnew.data.Article
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.ArticleDetailDestination
@@ -29,6 +31,8 @@ fun ScreenNav(
         navController = appState.navController,
         startDestination = HomeDestination.route
     ) {
+
+
         homeGraph(
             { appState.back() },
             { it ->

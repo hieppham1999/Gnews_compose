@@ -36,6 +36,8 @@ import com.hieppt.enrich.gnew.ui.screens.common.ArticleVerticalCard
 import com.hieppt.enrich.gnew.ui.screens.common.HeaderWithTextButton
 import com.hieppt.enrich.gnew.ui.screens.home.compose.CategorySliderCard
 import com.hieppt.enrich.gnew.ui.screens.home.compose.UserGreeting
+import com.hieppt.enrich.gnew.ui.theme.backgroundColor
+import com.hieppt.enrich.gnew.ui.theme.tabBackgroundColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -67,8 +69,10 @@ fun HomeScreen(
 
         ScrollableTabRow(
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp)),
-            selectedTabIndex = screenState.category.ordinal, containerColor = Color.Green,
+                .clip(RoundedCornerShape(8.dp))
+                .padding(top = 20.dp),
+            divider = {},
+            selectedTabIndex = screenState.category.ordinal, containerColor = tabBackgroundColor,
             indicator = indicator
         ) {
             NewsCategory.values().forEachIndexed { index, category ->
@@ -123,10 +127,10 @@ private fun CustomIndicator(tabPositions: List<TabPosition>, currentPage: Int) {
             .offset(x = indicatorStart)
             .wrapContentSize(align = Alignment.BottomStart)
             .width(indicatorEnd - indicatorStart)
-            .padding(2.dp)
+            .padding(bottom = 5.dp)
             .fillMaxSize()
-            .background(color = Color(0xFFFF7455), RoundedCornerShape(50))
-            .border(BorderStroke(2.dp, Color(0xFFC13D25)), RoundedCornerShape(50))
+            .background(color = backgroundColor, RoundedCornerShape(bottomStartPercent = 25, bottomEndPercent = 25))
+//            .border(BorderStroke(2.dp, Color(0xFFC13D25)), RoundedCornerShape(50))
             .zIndex(1f)
     )
 }

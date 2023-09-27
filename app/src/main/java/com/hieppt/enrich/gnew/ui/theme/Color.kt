@@ -13,9 +13,12 @@ val Pink40 = Color(0xFF7D5260)
 val tabBackgroundColor = Color(0xFF30312D)
 val highlightColor = Color(0xFFBEDE61)
 val tabUnselectedColor = Color(0xFF787878)
+val tabUnselectedColor2 = Color(0xFFB3B3B3)
 val textDefaultColor = Color.White
 val textColor2 = Color(0xFFFEC158)
+val textColor3 = Color(0xFFD9DAD3)
 val cardBackgroundColor = Color(0xFF363636)
 val backgroundColor = Color(0xFF13140D)
+val fabColor = Color(0xFF27272747)
 
 val dividerColor = Color(0xFFC4C4C4)
