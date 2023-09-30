@@ -3,7 +3,6 @@ package com.hieppt.enrich.gnew.ui.screens.home
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,8 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,7 +39,9 @@ import com.hieppt.enrich.gnew.data.Article
 import com.hieppt.enrich.gnew.data.NewsCategory
 import com.hieppt.enrich.gnew.ui.screens.common.ArticleHorizontalCard
 import com.hieppt.enrich.gnew.ui.screens.common.ArticleVerticalCard
+import com.hieppt.enrich.gnew.ui.screens.common.CustomTabShape
 import com.hieppt.enrich.gnew.ui.screens.common.HeaderWithTextButton
+import com.hieppt.enrich.gnew.ui.screens.common.HighLightIndicatorShape
 import com.hieppt.enrich.gnew.ui.screens.home.compose.CategorySliderCard
 import com.hieppt.enrich.gnew.ui.screens.home.compose.UserGreeting
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
@@ -78,13 +77,13 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
-        UserGreeting(userName = "Hiep", imageBitmap = screenState.avatar)
+        UserGreeting(userName = screenState.user?.userName, imageBitmap = screenState.avatar)
         CategorySliderCard(
             modifier = Modifier
                 .fillMaxHeight(0.25F),
             listItem = screenState.headlines?.subList(0, 4),
             header = screenState.category.displayName,
-            onClick = {}
+            onClick = { onItemClick(screenState.headlines?.get(it)) }
         )
         ScrollableTabRow(
             modifier = Modifier
@@ -96,7 +95,7 @@ fun HomeScreen(
             indicator = indicator
         ) {
             NewsCategory.values().forEachIndexed { index, category ->
-                Tab(modifier = Modifier.zIndex(6f), text = { Text(text = category.displayName) },
+                Tab(modifier = Modifier.zIndex(3f), text = { Text(text = category.displayName) },
                     selected = NewsCategory.values().indexOf(category) == index,
                     onClick = { viewModel.updateCategoryTab(category) }
                 )
@@ -105,7 +104,8 @@ fun HomeScreen(
 
         Box(
             modifier = Modifier
-                .fillMaxHeight().weight(1F,fill = false)
+                .fillMaxHeight()
+                .weight(1F, fill = false)
                 .pullRefresh(state = pullRefreshState)
                 .verticalScroll(state = rememberScrollState())
         ) {
@@ -148,7 +148,6 @@ fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CustomIndicator(tabPositions: List<TabPosition>, currentPage: Int) {
     val transition = updateTransition(currentPage, label = "")
@@ -175,19 +174,29 @@ private fun CustomIndicator(tabPositions: List<TabPosition>, currentPage: Int) {
     ) {
         tabPositions[it].right
     }
+    Box(
+        Modifier
+            .offset(x = indicatorStart)
+            .wrapContentSize(align = Alignment.BottomStart)
+            .width(indicatorEnd - indicatorStart)
+            .fillMaxSize()
+            .background(
+                color = backgroundColor,
+                CustomTabShape
+            )
+            .zIndex(1f)
+    )
 
     Box(
         Modifier
             .offset(x = indicatorStart)
             .wrapContentSize(align = Alignment.BottomStart)
             .width(indicatorEnd - indicatorStart)
-            .padding(bottom = 5.dp)
             .fillMaxSize()
             .background(
-                color = backgroundColor,
-                RoundedCornerShape(bottomStartPercent = 25, bottomEndPercent = 25)
+                color = highlightColor,
+                HighLightIndicatorShape(height = 6F)
             )
-//            .border(BorderStroke(2.dp, Color(0xFFC13D25)), RoundedCornerShape(50))
-            .zIndex(1f)
+            .zIndex(2f)
     )
 }

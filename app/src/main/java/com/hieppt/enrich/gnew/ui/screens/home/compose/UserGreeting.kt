@@ -28,7 +28,7 @@ import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.ui.screens.common.UserAvatar
 
 @Composable
-fun UserGreeting(userName: String, imageBitmap: Bitmap?) {
+fun UserGreeting(userName: String? = "User", imageBitmap: Bitmap?) {
     Row(
         modifier = Modifier
             .background(Color.Transparent)

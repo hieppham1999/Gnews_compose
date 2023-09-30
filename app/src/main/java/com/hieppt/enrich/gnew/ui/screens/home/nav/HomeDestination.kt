@@ -13,9 +13,15 @@ object HomeDestination : NavigationDestination {
 
 fun NavGraphBuilder.homeGraph(
     onBack: () -> Unit,
-    onItemClick: (article :Article?) -> Unit
+    onItemClick: (article: Article?) -> Unit
 ) {
     composable(route = HomeDestination.route) {
-        HomeScreen(onBack = onBack, onItemClick = onItemClick)
+        HomeScreen(
+            onBack = onBack,
+            onItemClick = { article ->
+                if (article != null) {
+                    onItemClick(article)
+                }
+            })
     }
 }
