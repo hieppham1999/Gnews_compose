@@ -12,8 +12,10 @@ import com.hieppt.enrich.gnew.data.api.ArticleList
 import com.hieppt.enrich.gnew.data.repository.ArticleRepository
 import com.hieppt.enrich.gnew.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -72,7 +74,7 @@ class HomeViewModel @Inject constructor(
 
     @OptIn(ExperimentalFoundationApi::class)
     private fun getUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val user = _userRepository.getUser()
             _screenState.update { data ->
                 data.copy(user = user)
@@ -82,7 +84,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun loadingUserAvatar() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val imgBitmap = _userRepository.getImage(path = _screenState.value.user?.avatar)
             imgBitmap?.let { updateUserAvatar(imgBitmap = it) }
         }
@@ -105,16 +107,16 @@ class HomeViewModel @Inject constructor(
             }
         }
         return null
-
     }
-
-    data class HomeScreenData @OptIn(ExperimentalFoundationApi::class) constructor(
-        val category: NewsCategory,
-        val user: User? = null,
-        val avatar: Bitmap? = null,
-        val headlines: List<Article>? = null,
-        val pagerState: MutableStateFlow<PagerState>,
-        val verticalRecommendArticleList: List<Article>? = null,
-        val horizontalRecommendArticleList: List<Article>? = null,
-    )
 }
+
+data class HomeScreenData @OptIn(ExperimentalFoundationApi::class) constructor(
+    val category: NewsCategory,
+    val user: User? = null,
+    val isLoading: Boolean = false,
+    val avatar: Bitmap? = null,
+    val headlines: List<Article>? = null,
+    val pagerState: MutableStateFlow<PagerState>,
+    val verticalRecommendArticleList: List<Article>? = null,
+    val horizontalRecommendArticleList: List<Article>? = null,
+)

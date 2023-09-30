@@ -23,6 +23,9 @@ import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabPosition
 import androidx.compose.material3.Text
+import androidx.compose.material3.pullrefresh.PullRefreshIndicator
+import androidx.compose.material3.pullrefresh.pullRefresh
+import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -42,6 +46,7 @@ import com.hieppt.enrich.gnew.ui.screens.common.HeaderWithTextButton
 import com.hieppt.enrich.gnew.ui.screens.home.compose.CategorySliderCard
 import com.hieppt.enrich.gnew.ui.screens.home.compose.UserGreeting
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
+import com.hieppt.enrich.gnew.ui.theme.highlightColor
 import com.hieppt.enrich.gnew.ui.theme.tabBackgroundColor
 
 @Composable
@@ -50,8 +55,6 @@ fun HomeScreen(
     onBack: () -> Unit,
     onItemClick: (article: Article?) -> Unit
 ) {
-    val context = LocalContext.current
-
     val screenState by viewModel.screenState.collectAsState()
 
     val currentCategoryIndex = NewsCategory.values().indexOf(screenState.category)
@@ -59,6 +62,12 @@ fun HomeScreen(
     val indicator = @Composable { tabPositions: List<TabPosition> ->
         CustomIndicator(tabPositions, currentCategoryIndex)
     }
+
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = screenState.isLoading,
+        onRefresh = viewModel::updateHeadlines,
+        refreshThreshold = 35.dp
+    )
 
     LaunchedEffect(key1 = null) {
         viewModel.loadingUserAvatar()
@@ -94,30 +103,47 @@ fun HomeScreen(
             }
         }
 
-        Column(
+        Box(
             modifier = Modifier
+                .fillMaxHeight().weight(1F,fill = false)
+                .pullRefresh(state = pullRefreshState)
                 .verticalScroll(state = rememberScrollState())
         ) {
-            HeaderWithTextButton(modifier = Modifier
-                .padding(vertical = 8.dp), onClick = {})
 
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                items(screenState.headlines ?: listOf()) { article ->
-                    ArticleVerticalCard(article = article, onClick = { onItemClick(article) })
+            Column(
+
+            ) {
+
+                HeaderWithTextButton(modifier = Modifier
+                    .padding(vertical = 8.dp), onClick = {})
+
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    items(screenState.headlines ?: listOf()) { article ->
+                        ArticleVerticalCard(article = article, onClick = { onItemClick(article) })
+                    }
                 }
-            }
 
-            HeaderWithTextButton(modifier = Modifier
-                .padding(vertical = 8.dp), onClick = {})
+                HeaderWithTextButton(modifier = Modifier
+                    .padding(vertical = 8.dp), onClick = {})
 
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-                screenState.headlines?.forEachIndexed { _, article ->
-                    ArticleHorizontalCard(article = article, onClick = {
-                        onItemClick(article)
-                    })
+                    screenState.headlines?.forEachIndexed { _, article ->
+                        ArticleHorizontalCard(article = article, onClick = {
+                            onItemClick(article)
+                        })
+                    }
                 }
+
+
             }
+            PullRefreshIndicator(
+                refreshing = screenState.isLoading,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter),
+                contentColor = highlightColor
+//                backgroundColor = if (screenState.isLoading) Color.Red else Color.Green,
+            )
         }
     }
 }
