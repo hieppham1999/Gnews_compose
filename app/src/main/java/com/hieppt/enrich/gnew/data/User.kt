@@ -2,9 +2,7 @@ package com.hieppt.enrich.gnew.data
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class User constructor(
     @field:SerializedName ("username") val userName: String,
-    @field:SerializedName ("password") val password: String,
-    @field:SerializedName ("email") val email: String,
-    @field:SerializedName ("avatar") val avatar: String,
+    @field:SerializedName ("avatar") val avatar: String? = null,
 )

@@ -3,10 +3,13 @@ package com.hieppt.enrich.gnew.data.di
 import android.content.Context
 import androidx.room.Room
 import com.hieppt.enrich.gnew.data.api.ArticleApiService
+import com.hieppt.enrich.gnew.data.api.LocalUserService
 import com.hieppt.enrich.gnew.data.dao.ArticleDao
 import com.hieppt.enrich.gnew.data.db.AppDatabase
 import com.hieppt.enrich.gnew.data.repository.ArticleRepository
 import com.hieppt.enrich.gnew.data.repository.ArticleRepositoryImpl
+import com.hieppt.enrich.gnew.data.repository.UserRepository
+import com.hieppt.enrich.gnew.data.repository.LocalUserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,6 +26,12 @@ interface DataModule {
     fun bindArticleRepo(
         articleRepository: ArticleRepositoryImpl
     ) : ArticleRepository
+
+    @Binds
+    @Singleton
+    fun bindUserRepo(
+        userRepository: LocalUserRepository
+    ) : UserRepository
 }
 
 @Module
@@ -49,5 +58,9 @@ object NetworkModule {
         return ArticleApiService.create()
     }
 
-
+    @Singleton
+    @Provides
+    fun createLocalUserService() : LocalUserService {
+        return LocalUserService()
+    }
 }

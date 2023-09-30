@@ -2,11 +2,10 @@ package com.hieppt.enrich.gnew.ui.screens.my_profile
 
 import android.content.Context
 import android.graphics.Bitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hieppt.enrich.gnew.helper.loadImageFromStorage
-import com.hieppt.enrich.gnew.helper.saveToInternalStorage
+import com.hieppt.enrich.gnew.data.User
+import com.hieppt.enrich.gnew.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,11 +14,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyProfileViewModel @Inject constructor() : ViewModel() {
+class MyProfileViewModel @Inject constructor(private val _userRepo : UserRepository) : ViewModel() {
 
     private val _screenState = MutableStateFlow(MyProfileData())
 
     val screenState = _screenState.asStateFlow()
+
+    fun initData() {
+        _screenState.value = MyProfileData()
+        getUser()
+        loadImage()
+    }
+
+    private fun getUser() {
+        viewModelScope.launch {
+            val user = _userRepo.getUser()
+            _screenState.update { data ->
+                data.copy(user = user)
+            }
+        }
+
+    }
 
     fun updateImageBitmap(bitmap: Bitmap) {
         _screenState.update { data ->
@@ -27,14 +42,17 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun loadImage(context: Context) {
+    fun updateInformationChangedState(isChanged: Boolean) {
+        _screenState.update { data ->
+            data.copy(isInformationChanged = isChanged)
+        }
+    }
+
+    private fun loadImage() {
         viewModelScope.launch {
-            val directory = context.getDir("imageDir", Context.MODE_PRIVATE)
-            val imgBitmap = loadImageFromStorage(path = directory.absolutePath)
+            val imgBitmap = _userRepo.getImage(path = _screenState.value.user?.avatar)
             if (imgBitmap != null) {
-                _screenState.update {data ->
-                    data.copy(imgBitmap = imgBitmap)
-                }
+                updateImageBitmap(imgBitmap)
             }
         }
     }
@@ -42,9 +60,10 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
     fun saveImage(context: Context, imageBitmap: Bitmap?) {
         viewModelScope.launch {
             val path = imageBitmap?.let {
-                saveToInternalStorage(context = context, it)
-
-
+                _userRepo.saveImage(context = context, imageBitmap = imageBitmap)
+                _screenState.update { data ->
+                    data.copy(isInformationChanged = false)
+                }
             }
             println(path)
         }
@@ -54,5 +73,7 @@ class MyProfileViewModel @Inject constructor() : ViewModel() {
 }
 
 data class MyProfileData constructor(
-    val imgBitmap: Bitmap? = null
+    val user: User? = null,
+    val imgBitmap: Bitmap? = null,
+    val isInformationChanged: Boolean = false,
 )

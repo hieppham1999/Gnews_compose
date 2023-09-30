@@ -50,8 +50,8 @@ abstract class CallDelegate<TIn, TOut>(
     protected val proxy: Call<TIn>
 ) : Call<TOut> {
     override fun execute(): Response<TOut> = throw NotImplementedError()
-    override final fun enqueue(callback: Callback<TOut>) = enqueueImpl(callback)
-    override final fun clone(): Call<TOut> = cloneImpl()
+    final override fun enqueue(callback: Callback<TOut>) = enqueueImpl(callback)
+    final override fun clone(): Call<TOut> = cloneImpl()
 
     override fun cancel() = proxy.cancel()
     override fun request(): Request = proxy.request()
