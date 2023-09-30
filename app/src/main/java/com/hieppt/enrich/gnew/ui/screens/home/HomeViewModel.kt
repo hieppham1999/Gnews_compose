@@ -35,23 +35,23 @@ class HomeViewModel @Inject constructor(private  val _repository: ArticleReposit
     }
     @OptIn(ExperimentalFoundationApi::class)
     fun updateHeadlines() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val newHeadlines = getHighLightArticles(_screenState.value.category)
-            if (newHeadlines != null) {
-                val list: MutableList<Article> = ArrayList()
-                newHeadlines.articles.forEach { _repository.insertArticleToDB(it) }
-                list.addAll(newHeadlines.articles)
-                _screenState.update { state ->
-                    if (list.size < 10) {
-                        _repository.getArticleFromDb().distinctUntilChanged().collect() {
-                            list.addAll(it)
-                        }
-                    }
-                    state.copy(headlines = list)
-                }
-            }
-
-        }
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val newHeadlines = getHighLightArticles(_screenState.value.category)
+//            if (newHeadlines != null) {
+//                val list: MutableList<Article> = ArrayList()
+//                newHeadlines.articles.forEach { _repository.insertArticleToDB(it) }
+//                list.addAll(newHeadlines.articles)
+//                _screenState.update { state ->
+//                    if (list.size < 10) {
+//                        _repository.getArticleFromDb().distinctUntilChanged().collect() {
+//                            list.addAll(it)
+//                        }
+//                    }
+//                    state.copy(headlines = list)
+//                }
+//            }
+//
+//        }
     }
 
     @OptIn(ExperimentalFoundationApi::class)
