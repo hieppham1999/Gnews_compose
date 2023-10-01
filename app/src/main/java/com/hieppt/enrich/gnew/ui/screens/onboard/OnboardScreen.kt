@@ -38,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.ui.screens.common.CirclePagerIndicator
 import com.hieppt.enrich.gnew.ui.screens.onboard.composes.GettingStartedButton
+import com.hieppt.enrich.gnew.ui.theme.appDefaultPadding
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -70,7 +71,7 @@ fun OnboardScreen(
             ) {
                 CirclePagerIndicator(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = appDefaultPadding)
                         .width(
                             60.dp
                         )
@@ -126,7 +127,6 @@ private fun SlideShowBackground(
         }
 
         if (pagerState.isScrollInProgress) {
-            println(4)
             job.cancelChildren()
         }
     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -14,7 +15,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
@@ -37,26 +37,20 @@ fun BottomNavigationBar(
     ) {
         items.forEach { destination ->
 
-
-
             val selected =
                 currentDestination?.hierarchy?.any {
-
-
-                    println("Check isSelected")
-                    println(it.route)
-                    println(destination.route)
-
                     checkRouteStartWith(
                         text = it.route,
                         startWith = destination.route
                     )
                 } == true
             NavigationBarItem(
+                modifier = Modifier
+                    .wrapContentSize(),
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.Transparent,
+                    indicatorColor = backgroundColor,
                     selectedIconColor = highlightColor,
                     unselectedIconColor = tabUnselectedColor
                 ),
@@ -71,11 +65,9 @@ fun BottomNavigationBar(
                         if (selected) Box(
                             modifier = Modifier
                                 .size(width = 4.dp, height = 4.dp)
-                                .padding(top = 4.dp)
+                                .padding(top = 1.dp)
                                 .background(color = highlightColor, shape = CircleShape)
                         )
-
-
                     }
                 }
             )

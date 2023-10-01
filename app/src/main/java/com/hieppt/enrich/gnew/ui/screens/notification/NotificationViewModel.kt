@@ -1,11 +1,12 @@
-package com.hieppt.enrich.gnew.ui.screens.discover
+package com.hieppt.enrich.gnew.ui.screens.notification
+
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hieppt.enrich.gnew.data.model.Article
 import com.hieppt.enrich.gnew.data.model.NewsCategory
 import com.hieppt.enrich.gnew.data.repository.ArticleRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.hieppt.enrich.gnew.ui.screens.discover.ArticleListScreenData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,8 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class DiscoverViewModel @Inject constructor(
+class NotificationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val _repository: ArticleRepository,
 ) : ViewModel() {
@@ -71,8 +71,3 @@ class DiscoverViewModel @Inject constructor(
         return null
     }
 }
-
-data class ArticleListScreenData constructor(
-    val category: NewsCategory = NewsCategory.General,
-    val articleList: List<Article>
-)

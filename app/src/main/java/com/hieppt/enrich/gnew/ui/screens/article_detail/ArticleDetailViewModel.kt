@@ -2,13 +2,10 @@ package com.hieppt.enrich.gnew.ui.screens.article_detail
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.hieppt.enrich.gnew.data.Article
-import com.hieppt.enrich.gnew.data.NewsCategory
-import com.hieppt.enrich.gnew.ui.screens.home.HomeViewModel
+import com.hieppt.enrich.gnew.data.model.Article
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

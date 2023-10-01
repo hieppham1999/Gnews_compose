@@ -16,10 +16,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.hieppt.enrich.gnew.data.model.NewsCategory
 import com.hieppt.enrich.gnew.helper.checkRouteStartWith
 import com.hieppt.enrich.gnew.navigation.ScreenNav
+import com.hieppt.enrich.gnew.navigation.TopLevelDestinationItem
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.ArticleDetailDestination
 import com.hieppt.enrich.gnew.ui.screens.common.BottomNavigationBar
+import com.hieppt.enrich.gnew.ui.screens.discover.nav.ExploreDestination
+import com.hieppt.enrich.gnew.ui.screens.notification.nav.NotificationDestination
 import com.hieppt.enrich.gnew.ui.theme.GnewsComposeTheme
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
 import com.hieppt.enrich.gnew.ui.theme.rememberAppState
@@ -53,7 +57,20 @@ class MainActivity : ComponentActivity() {
                         ) {
                             BottomNavigationBar(
                                 items = appState.bottomBarItems,
-                                onNavigateToDestination = appState::navigate,
+                                onNavigateToDestination = {
+                                    when (it.route) {
+                                        ExploreDestination.route -> appState.navigate(
+                                            TopLevelDestinationItem.EXPLORE,
+                                            route = ExploreDestination.route + "/${NewsCategory.General.name}"
+                                        )
+                                        NotificationDestination.route -> appState.navigate(
+                                            TopLevelDestinationItem.NOTIFY,
+                                            route = NotificationDestination.route + "/${NewsCategory.General.name}"
+                                        )
+                                        else -> appState.navigate(it)
+
+                                    }
+                                },
                                 currentDestination = appState.currentDestination
                             )
                         }

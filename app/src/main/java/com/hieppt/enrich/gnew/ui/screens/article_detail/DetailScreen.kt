@@ -44,8 +44,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hieppt.enrich.gnew.R
-import com.hieppt.enrich.gnew.data.Article
+import com.hieppt.enrich.gnew.data.model.Article
 import com.hieppt.enrich.gnew.ui.screens.common.AppAsyncImage
+import com.hieppt.enrich.gnew.ui.theme.appDefaultPadding
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
 import com.hieppt.enrich.gnew.ui.theme.dividerColor
 import com.hieppt.enrich.gnew.ui.theme.fabColor
@@ -75,7 +76,7 @@ fun DetailScreen(
 
         FloatingActionButton(modifier = Modifier
             .align(Alignment.TopStart)
-            .padding(top = 16.dp, start = 16.dp)
+            .padding(top = appDefaultPadding, start = appDefaultPadding)
             .width(24.dp)
             .height(24.dp),
             shape = CircleShape,
@@ -169,8 +170,6 @@ fun ArticleContent(modifier: Modifier = Modifier, article: Article?) {
             )
 
             ScrollableTabRow(
-//                modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp)),
                 divider = { },
                 edgePadding = 0.dp,
                 selectedTabIndex = tabIndex, containerColor = Color.Transparent,
@@ -199,7 +198,7 @@ fun ArticleContent(modifier: Modifier = Modifier, article: Article?) {
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(color = backgroundColor)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .padding(appDefaultPadding)
         ) {
             when (tabIndex) {
                 0 -> Column {

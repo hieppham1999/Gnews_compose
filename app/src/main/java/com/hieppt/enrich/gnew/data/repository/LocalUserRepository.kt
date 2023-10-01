@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
-import com.hieppt.enrich.gnew.data.User
+import com.hieppt.enrich.gnew.data.model.User
 import com.hieppt.enrich.gnew.data.api.LocalUserService
 import java.io.File
 import javax.inject.Inject

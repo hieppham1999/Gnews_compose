@@ -7,14 +7,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.navigation.TopLevelDestination
 import com.hieppt.enrich.gnew.navigation.TopLevelDestinationItem
-import com.hieppt.enrich.gnew.ui.screens.discover.nav.ExploreDestination
-import com.hieppt.enrich.gnew.ui.screens.home.nav.HomeDestination
-import com.hieppt.enrich.gnew.ui.screens.my_profile.nav.MyProfileDestination
-import com.hieppt.enrich.gnew.ui.screens.notification.nav.NotificationDestination
 
 @Composable
 fun rememberAppState(
@@ -43,8 +38,6 @@ class AppState(
         destination: NavigationDestination,
         route: String? = null) {
         if (destination is TopLevelDestination) {
-
-            println("IS TOP DEST")
 
             navController.navigate(route ?: destination.route) {
                 // Pop up to the start destination of the graph to

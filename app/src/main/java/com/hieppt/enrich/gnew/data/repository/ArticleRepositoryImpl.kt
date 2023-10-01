@@ -1,10 +1,9 @@
 package com.hieppt.enrich.gnew.data.repository
 
 import android.util.Log
-import com.hieppt.enrich.gnew.data.Article
-import com.hieppt.enrich.gnew.data.NewsCategory
+import com.hieppt.enrich.gnew.data.model.Article
+import com.hieppt.enrich.gnew.data.model.NewsCategory
 import com.hieppt.enrich.gnew.data.api.ArticleApiService
-import com.hieppt.enrich.gnew.data.api.ArticleList
 import com.hieppt.enrich.gnew.data.api.Resource
 import com.hieppt.enrich.gnew.data.dao.ArticleDao
 import com.hieppt.enrich.gnew.data.entity.ArticleEntity

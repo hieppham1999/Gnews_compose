@@ -27,11 +27,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hieppt.enrich.gnew.data.Article
+import com.hieppt.enrich.gnew.data.model.Article
 import com.hieppt.enrich.gnew.helper.getTextHeight
 import com.hieppt.enrich.gnew.helper.textWidth
 import com.hieppt.enrich.gnew.ui.screens.common.AppAsyncImage
 import com.hieppt.enrich.gnew.ui.screens.common.CirclePagerIndicator
+import com.hieppt.enrich.gnew.ui.theme.appDefaultPadding
 import com.hieppt.enrich.gnew.ui.theme.boxColor
 
 
@@ -53,7 +54,7 @@ fun CategorySliderCard(
 
         val pageCount = listItem?.size ?: 0
 
-        val startPadding = 16.dp
+        val startPadding = appDefaultPadding
 
         val titleLineHeight = 21.0
 
@@ -92,12 +93,13 @@ fun CategorySliderCard(
             header?.uppercase()?.let {
                 Box(
                     modifier = Modifier
-                        .padding(bottom = 16.dp, start = startPadding)
+                        .padding(bottom = appDefaultPadding, start = startPadding)
                         .fillMaxWidth()
                 ) {
 
                     val firstCharWidth = textWidth(it[0].toString(), fontSize = 14F, context = LocalContext.current)
-                    val firstCharHeight = getTextHeight(it[0].toString(), fontSize = 14F, context = LocalContext.current)
+//                    val firstCharHeight =
+//                        getTextHeight(it[0].toString(), fontSize = 14F, context = LocalContext.current)
 
                     Box(
                         modifier

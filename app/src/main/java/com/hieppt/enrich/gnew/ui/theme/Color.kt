@@ -19,8 +19,6 @@ val textColor2 = Color(0xFFFEC158)
 val textColor3 = Color(0xFFD9DAD3)
 val cardBackgroundColor = Color(0xFF363636)
 val backgroundColor = Color(0xFF13140D)
-val fabColor = Color(0xFF27272747)
-
+val fabColor = Color(0x27272747)
 val boxColor = Color(0xFFF4C41A)
-
 val dividerColor = Color(0xFFC4C4C4)

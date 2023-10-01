@@ -1,4 +1,4 @@
-package com.hieppt.enrich.gnew.data
+package com.hieppt.enrich.gnew.data.model
 
 import androidx.room.Entity
 import com.google.gson.annotations.SerializedName

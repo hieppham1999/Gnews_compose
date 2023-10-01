@@ -35,8 +35,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hieppt.enrich.gnew.data.Article
-import com.hieppt.enrich.gnew.data.NewsCategory
+import com.hieppt.enrich.gnew.data.model.Article
+import com.hieppt.enrich.gnew.data.model.NewsCategory
 import com.hieppt.enrich.gnew.ui.screens.common.ArticleHorizontalCard
 import com.hieppt.enrich.gnew.ui.screens.common.ArticleVerticalCard
 import com.hieppt.enrich.gnew.ui.screens.common.CustomTabShape
@@ -44,7 +44,9 @@ import com.hieppt.enrich.gnew.ui.screens.common.HeaderWithTextButton
 import com.hieppt.enrich.gnew.ui.screens.common.HighLightIndicatorShape
 import com.hieppt.enrich.gnew.ui.screens.home.compose.CategorySliderCard
 import com.hieppt.enrich.gnew.ui.screens.home.compose.UserGreeting
+import com.hieppt.enrich.gnew.ui.theme.appDefaultPadding
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
+import com.hieppt.enrich.gnew.ui.theme.defaultItemSpacing
 import com.hieppt.enrich.gnew.ui.theme.highlightColor
 import com.hieppt.enrich.gnew.ui.theme.tabBackgroundColor
 
@@ -77,7 +79,7 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = appDefaultPadding)
     ) {
         UserGreeting(userName = screenState.user?.userName, imageBitmap = screenState.avatar)
         CategorySliderCard(
@@ -119,7 +121,7 @@ fun HomeScreen(
                 HeaderWithTextButton(modifier = Modifier
                     .padding(vertical = 8.dp), onClick = {onShowAllHorizontalList(screenState.category)})
 
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(defaultItemSpacing)) {
                     items(screenState.headlines ?: listOf()) { article ->
                         ArticleVerticalCard(article = article, onClick = { onItemClick(article) })
                     }
@@ -128,7 +130,7 @@ fun HomeScreen(
                 HeaderWithTextButton(modifier = Modifier
                     .padding(vertical = 8.dp), onClick = {onShowAllVerticalList(screenState.category)})
 
-                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(defaultItemSpacing)) {
 
                     screenState.headlines?.forEachIndexed { _, article ->
                         ArticleHorizontalCard(article = article, onClick = {

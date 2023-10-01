@@ -62,15 +62,13 @@ fun ProfileScreen(
     }
     Column(
         Modifier
-            .fillMaxSize()
-            .padding(bottom = 16.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
                 .fillMaxHeight()
                 .weight(1F, true),
             horizontalAlignment = Alignment.CenterHorizontally

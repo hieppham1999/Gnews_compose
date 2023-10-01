@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.hieppt.enrich.gnew.data.Article
-import com.hieppt.enrich.gnew.data.ArticleSource
+import com.hieppt.enrich.gnew.data.model.Article
+import com.hieppt.enrich.gnew.data.model.ArticleSource
 import javax.annotation.Nonnull
 
 @Entity(tableName = "article")

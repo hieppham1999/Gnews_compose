@@ -2,7 +2,7 @@ package com.hieppt.enrich.gnew.data.repository
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.hieppt.enrich.gnew.data.User
+import com.hieppt.enrich.gnew.data.model.User
 
 interface UserRepository {
 

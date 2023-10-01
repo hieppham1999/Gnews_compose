@@ -5,10 +5,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hieppt.enrich.gnew.data.Article
-import com.hieppt.enrich.gnew.data.NewsCategory
-import com.hieppt.enrich.gnew.data.User
-import com.hieppt.enrich.gnew.data.api.ArticleList
+import com.hieppt.enrich.gnew.data.model.Article
+import com.hieppt.enrich.gnew.data.model.NewsCategory
+import com.hieppt.enrich.gnew.data.model.User
 import com.hieppt.enrich.gnew.data.repository.ArticleRepository
 import com.hieppt.enrich.gnew.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +28,7 @@ class HomeViewModel @Inject constructor(
     @OptIn(ExperimentalFoundationApi::class)
     private val _screenState = MutableStateFlow(
         HomeScreenData(
-            category = NewsCategory.business,
+            category = NewsCategory.Business,
             pagerState = MutableStateFlow(
                 PagerState(0)
             ),
@@ -95,7 +94,6 @@ class HomeViewModel @Inject constructor(
         _screenState.update { state ->
             state.copy(category = category)
         }
-
         updateHeadlines()
     }
 

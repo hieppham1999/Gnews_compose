@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hieppt.enrich.gnew.data.User
+import com.hieppt.enrich.gnew.data.model.User
 import com.hieppt.enrich.gnew.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +66,6 @@ class MyProfileViewModel @Inject constructor(private val _userRepo : UserReposit
                     data.copy(isInformationChanged = false)
                 }
             }
-            println(path)
         }
 
     }

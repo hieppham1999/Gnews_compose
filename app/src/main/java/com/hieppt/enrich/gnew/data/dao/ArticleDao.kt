@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hieppt.enrich.gnew.data.Article
+import com.hieppt.enrich.gnew.data.model.Article
 import com.hieppt.enrich.gnew.data.entity.ArticleEntity
 import kotlinx.coroutines.flow.Flow
 
