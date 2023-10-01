@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.hieppt.enrich.gnew.data.Article
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.ArticleDetailDestination
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.detailGraph
+import com.hieppt.enrich.gnew.ui.screens.discover.nav.ExploreDestination
 import com.hieppt.enrich.gnew.ui.screens.discover.nav.exploreGraph
 import com.hieppt.enrich.gnew.ui.screens.home.nav.HomeDestination
 import com.hieppt.enrich.gnew.ui.screens.home.nav.homeGraph
@@ -37,11 +38,26 @@ fun ScreenNav(
             { appState.back() },
             { it ->
                 var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
-                appState.navController.navigate(ArticleDetailDestination.route + "/data/${encode}") },
+                appState.navController.navigate(ArticleDetailDestination.route + "/data/${encode}")
+            },
+            onShowAllVerticalList = {
+                it ->
+                var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
+                appState.navController.navigate(ExploreDestination.route + "/list/${encode}")
+            },
+            onShowAllHorizontalList = {
+                    it ->
+                var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
+                appState.navController.navigate(ExploreDestination.route + "/list/${encode}")
+            }
         )
-        exploreGraph {
-            appState.back()
-        }
+        exploreGraph(
+            onBack = { appState.back() },
+            onItemClick = { it ->
+                var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
+                appState.navController.navigate(ArticleDetailDestination.route + "/data/${encode}")
+            },
+        )
         notificationGraph { appState.back() }
         myProfileGraph { appState.back() }
         detailGraph { appState.back() }

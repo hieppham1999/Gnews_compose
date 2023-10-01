@@ -13,7 +13,10 @@ object HomeDestination : NavigationDestination {
 
 fun NavGraphBuilder.homeGraph(
     onBack: () -> Unit,
-    onItemClick: (article: Article?) -> Unit
+    onItemClick: (article: Article?) -> Unit,
+    onShowAllVerticalList: (List<Article>) -> Unit,
+    onShowAllHorizontalList: (List<Article>) -> Unit
+
 ) {
     composable(route = HomeDestination.route) {
         HomeScreen(
@@ -22,6 +25,18 @@ fun NavGraphBuilder.homeGraph(
                 if (article != null) {
                     onItemClick(article)
                 }
-            })
+            },
+            onShowAllVerticalList = {
+                if (it != null) {
+                    println("here")
+                    onShowAllVerticalList(it)
+                }
+            },
+            onShowAllHorizontalList = {
+                if (it != null) {
+                    onShowAllHorizontalList(it)
+                }
+            }
+        )
     }
 }

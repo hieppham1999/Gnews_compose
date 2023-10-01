@@ -33,6 +33,7 @@ import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.navigation.ScreenNav
 import com.hieppt.enrich.gnew.navigation.TopLevelDestination
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.ArticleDetailDestination
+import com.hieppt.enrich.gnew.ui.screens.common.BottomNavigationBar
 import com.hieppt.enrich.gnew.ui.theme.GnewsComposeTheme
 import com.hieppt.enrich.gnew.ui.theme.backgroundColor
 import com.hieppt.enrich.gnew.ui.theme.rememberAppState
@@ -79,41 +80,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun BottomNavigationBar(
-    items: List<TopLevelDestination>,
-    onNavigateToDestination: (NavigationDestination) -> Unit,
-    currentDestination: NavDestination?
-) {
-    NavigationBar(
-        containerColor = backgroundColor
-    ) {
-        items.forEach { destination ->
-
-            val selected =
-                currentDestination?.hierarchy?.any { it.route == destination.route } == true
-            NavigationBarItem(
-                selected = selected,
-                onClick = { onNavigateToDestination(destination) },
-                colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = Color.Transparent,
-                    selectedIconColor = highlightColor,
-                    unselectedIconColor = tabUnselectedColor
-                ),
-                icon = {
-                    Icon(
-                        painter = painterResource(id = destination.icon),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(if (selected) 20.dp else 15.dp),
-//                        tint = highlightColor
-                    )
-                }
-            )
         }
     }
 }

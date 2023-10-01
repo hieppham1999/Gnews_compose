@@ -52,7 +52,9 @@ import com.hieppt.enrich.gnew.ui.theme.tabBackgroundColor
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    onItemClick: (article: Article?) -> Unit
+    onItemClick: (article: Article?) -> Unit,
+    onShowAllVerticalList: (List<Article>?) -> Unit,
+    onShowAllHorizontalList: (List<Article>?) -> Unit
 ) {
     val screenState by viewModel.screenState.collectAsState()
 
@@ -115,7 +117,7 @@ fun HomeScreen(
             ) {
 
                 HeaderWithTextButton(modifier = Modifier
-                    .padding(vertical = 8.dp), onClick = {})
+                    .padding(vertical = 8.dp), onClick = {onShowAllHorizontalList(screenState.headlines)})
 
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     items(screenState.headlines ?: listOf()) { article ->
@@ -124,7 +126,7 @@ fun HomeScreen(
                 }
 
                 HeaderWithTextButton(modifier = Modifier
-                    .padding(vertical = 8.dp), onClick = {})
+                    .padding(vertical = 8.dp), onClick = {onShowAllVerticalList(screenState.headlines)})
 
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
