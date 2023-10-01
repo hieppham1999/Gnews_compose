@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.hieppt.enrich.gnew.R
 import com.hieppt.enrich.gnew.navigation.NavigationDestination
 import com.hieppt.enrich.gnew.navigation.TopLevelDestination
+import com.hieppt.enrich.gnew.navigation.TopLevelDestinationItem
 import com.hieppt.enrich.gnew.ui.screens.discover.nav.ExploreDestination
 import com.hieppt.enrich.gnew.ui.screens.home.nav.HomeDestination
 import com.hieppt.enrich.gnew.ui.screens.my_profile.nav.MyProfileDestination
@@ -28,26 +29,10 @@ class AppState(
     val navController: NavHostController
 ) {
     val bottomBarItems = arrayListOf(
-        TopLevelDestination(
-            HomeDestination.route,
-            HomeDestination.destination,
-            icon = R.drawable.ic_home,
-        ),
-        TopLevelDestination(
-            ExploreDestination.route,
-            ExploreDestination.destination,
-            icon = R.drawable.ic_explore,
-        ),
-        TopLevelDestination(
-            NotificationDestination.route,
-            NotificationDestination.destination,
-            icon = R.drawable.ic_notification,
-        ),
-        TopLevelDestination(
-            MyProfileDestination.route,
-            MyProfileDestination.destination,
-            icon = R.drawable.ic_profile,
-        )
+        TopLevelDestinationItem.HOME,
+        TopLevelDestinationItem.EXPLORE,
+        TopLevelDestinationItem.NOTIFY,
+        TopLevelDestinationItem.PROFILE
     )
 
     val currentDestination: NavDestination?
@@ -58,6 +43,9 @@ class AppState(
         destination: NavigationDestination,
         route: String? = null) {
         if (destination is TopLevelDestination) {
+
+            println("IS TOP DEST")
+
             navController.navigate(route ?: destination.route) {
                 // Pop up to the start destination of the graph to
                 // avoid building up a large stack of destinations

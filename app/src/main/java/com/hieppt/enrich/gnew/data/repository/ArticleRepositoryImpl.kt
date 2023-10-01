@@ -13,9 +13,24 @@ import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(private val service: ArticleApiService, private val db: ArticleDao) :
     ArticleRepository {
-    override suspend fun getTopHeadline(category: NewsCategory): Resource<ArticleList> {
+
+    private val _articleMemCache = mutableMapOf<NewsCategory, List<Article>?>()
+
+    override suspend fun getTopHeadline(category: NewsCategory, forceRefresh: Boolean): Resource<List<Article>> {
         return try {
-            service.getTopHeadlines(category = category.name)
+
+            if (_articleMemCache.containsKey(category) && !forceRefresh) {
+                println("GET ${category.name} DATA FROM CACHE!!!!")
+
+                return Resource.success(data = _articleMemCache[category])
+            }
+
+            val result = service.getTopHeadlines(category = category.name)
+            if (result.isSuccess()) {
+                _articleMemCache.merge(category, result.data!!.articles) { _, newValue -> newValue }
+                return Resource.success(data = result.data.articles)
+            }
+            Resource.error( msg = null, data = null)
 
         } catch (e: Exception) {
             Log.e("getTopHeadline", e.toString())

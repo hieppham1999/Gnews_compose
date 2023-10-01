@@ -42,20 +42,18 @@ fun ScreenNav(
             },
             onShowAllVerticalList = {
                 it ->
-                var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
-                appState.navController.navigate(ExploreDestination.route + "/list/${encode}")
+                appState.navigate(TopLevelDestinationItem.EXPLORE, route = ExploreDestination.route + "/${it.name}")
             },
             onShowAllHorizontalList = {
                     it ->
-                var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
-                appState.navController.navigate(ExploreDestination.route + "/list/${encode}")
+                appState.navigate(TopLevelDestinationItem.EXPLORE, route = ExploreDestination.route + "/${it.name}")
             }
         )
         exploreGraph(
             onBack = { appState.back() },
             onItemClick = { it ->
                 var encode = URLEncoder.encode(Gson().toJson(it), StandardCharsets.UTF_8.toString())
-                appState.navController.navigate(ArticleDetailDestination.route + "/data/${encode}")
+                appState.navigate(ArticleDetailDestination, route = ArticleDetailDestination.route + "/data/${encode}")
             },
         )
         notificationGraph { appState.back() }

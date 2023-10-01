@@ -1,8 +1,9 @@
 package com.hieppt.enrich.gnew.ui.screens.discover
-
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hieppt.enrich.gnew.data.Article
@@ -14,11 +15,17 @@ fun DiscoverScreen(
     onBack: () -> Unit,
     onItemClick: (article: Article?) -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-        viewModel.list.forEachIndexed { _, article ->
-            ArticleVerticalCard(article = article, onClick = {
-                onItemClick(article)
+    val screenState = viewModel.screenState.collectAsState()
+
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 128.dp),
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        horizontalArrangement = Arrangement.spacedBy(15.dp)
+    ) {
+        items(count = screenState.value.articleList.size) { index ->
+            ArticleVerticalCard(article = screenState.value.articleList[index], onClick = {
+                onItemClick(screenState.value.articleList[index])
             })
         }
     }

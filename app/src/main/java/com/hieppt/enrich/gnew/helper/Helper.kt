@@ -13,16 +13,18 @@ import android.provider.MediaStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hieppt.enrich.gnew.ui.screens.article_detail.nav.ArticleDetailDestination
+import com.hieppt.enrich.gnew.ui.screens.discover.nav.ExploreDestination
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
+fun checkRouteStartWith(text: String?, startWith: String): Boolean {
+    return text?.matches(Regex("^${startWith}.*+")) ?: false
+}
 
-val articleDetailRouteRegex = "^${ArticleDetailDestination.route}.+"
-
-fun textWidth(text: String,fontSize : Float ,context: Context): Float {
+fun textWidth(text: String, fontSize: Float, context: Context): Float {
     val bounds = Rect()
     val textPaint = Paint()
     textPaint.textSize = fontSize
@@ -30,7 +32,7 @@ fun textWidth(text: String,fontSize : Float ,context: Context): Float {
     return bounds.width() * (context.resources.displayMetrics.density + 0.5f) / 2
 }
 
-fun getTextHeight(text: String,fontSize : Float ,context: Context): Float {
+fun getTextHeight(text: String, fontSize: Float, context: Context): Float {
     val bounds = Rect()
     val textPaint = Paint()
     textPaint.textSize = fontSize
@@ -54,5 +56,3 @@ fun getBitmapFromUri(context: Context, selectedPhotoUri: Uri): Bitmap? {
 
     return bitmap
 }
-fun <T> Gson.fromJsonList(jsonString: String): List<T> =
-    this.fromJson(jsonString, object: TypeToken<ArrayList<T>>() { }.type)

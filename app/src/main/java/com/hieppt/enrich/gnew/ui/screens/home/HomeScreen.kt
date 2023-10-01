@@ -53,8 +53,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onBack: () -> Unit,
     onItemClick: (article: Article?) -> Unit,
-    onShowAllVerticalList: (List<Article>?) -> Unit,
-    onShowAllHorizontalList: (List<Article>?) -> Unit
+    onShowAllVerticalList: (category: NewsCategory) -> Unit,
+    onShowAllHorizontalList: (category: NewsCategory) -> Unit
 ) {
     val screenState by viewModel.screenState.collectAsState()
 
@@ -66,7 +66,7 @@ fun HomeScreen(
 
     val pullRefreshState = rememberPullRefreshState(
         refreshing = screenState.isLoading,
-        onRefresh = viewModel::updateHeadlines,
+        onRefresh = { viewModel.updateHeadlines(forceRefresh = true) },
         refreshThreshold = 35.dp
     )
 
@@ -117,7 +117,7 @@ fun HomeScreen(
             ) {
 
                 HeaderWithTextButton(modifier = Modifier
-                    .padding(vertical = 8.dp), onClick = {onShowAllHorizontalList(screenState.headlines)})
+                    .padding(vertical = 8.dp), onClick = {onShowAllHorizontalList(screenState.category)})
 
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     items(screenState.headlines ?: listOf()) { article ->
@@ -126,7 +126,7 @@ fun HomeScreen(
                 }
 
                 HeaderWithTextButton(modifier = Modifier
-                    .padding(vertical = 8.dp), onClick = {onShowAllVerticalList(screenState.headlines)})
+                    .padding(vertical = 8.dp), onClick = {onShowAllVerticalList(screenState.category)})
 
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 

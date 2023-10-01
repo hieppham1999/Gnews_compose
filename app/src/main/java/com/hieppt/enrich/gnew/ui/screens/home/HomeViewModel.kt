@@ -45,24 +45,24 @@ class HomeViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalFoundationApi::class)
-    fun updateHeadlines() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val newHeadlines = getHighLightArticles(_screenState.value.category)
-//            if (newHeadlines != null) {
-//                val list: MutableList<Article> = ArrayList()
-//                newHeadlines.articles.forEach { _repository.insertArticleToDB(it) }
-//                list.addAll(newHeadlines.articles)
-//                _screenState.update { state ->
-//                    if (list.size < 10) {
-//                        _repository.getArticleFromDb().distinctUntilChanged().collect() {
-//                            list.addAll(it)
-//                        }
-//                    }
-//                    state.copy(headlines = list)
-//                }
-//            }
-//
-//        }
+    fun updateHeadlines(forceRefresh: Boolean = false) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newHeadlines = getHighLightArticles(_screenState.value.category, forceRefresh = forceRefresh)
+            if (newHeadlines != null) {
+                val list: MutableList<Article> = ArrayList()
+                newHeadlines.forEach { _repository.insertArticleToDB(it) }
+                list.addAll(newHeadlines)
+                _screenState.update { state ->
+                    if (list.size < 10) {
+                        _repository.getArticleFromDb().distinctUntilChanged().collect() {
+                            list.addAll(it)
+                        }
+                    }
+                    state.copy(headlines = list)
+                }
+            }
+
+        }
     }
 
     @OptIn(ExperimentalFoundationApi::class)
@@ -99,8 +99,8 @@ class HomeViewModel @Inject constructor(
         updateHeadlines()
     }
 
-    private suspend fun getHighLightArticles(category: NewsCategory): ArticleList? {
-        val result = _repository.getTopHeadline(category = category)
+    private suspend fun getHighLightArticles(category: NewsCategory, forceRefresh: Boolean = false): List<Article>? {
+        val result = _repository.getTopHeadline(category = category, forceRefresh = forceRefresh)
         if (result.isSuccess()) {
             if (result.data != null) {
                 return result.data
