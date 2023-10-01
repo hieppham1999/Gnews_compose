@@ -51,6 +51,7 @@ import com.hieppt.enrich.gnew.ui.theme.backgroundColor
 import com.hieppt.enrich.gnew.ui.theme.dividerColor
 import com.hieppt.enrich.gnew.ui.theme.fabColor
 import com.hieppt.enrich.gnew.ui.theme.highlightColor
+import com.hieppt.enrich.gnew.ui.theme.tabBackgroundColor
 import com.hieppt.enrich.gnew.ui.theme.tabUnselectedColor2
 import com.hieppt.enrich.gnew.ui.theme.textColor2
 import com.hieppt.enrich.gnew.ui.theme.textColor3
@@ -98,12 +99,12 @@ fun DetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.4f)
+                    .fillMaxHeight(0.6f)
                     .background(
                         Brush.verticalGradient(
                             0F to Color.Transparent,
-                            0.3F to Color(0xFF30312D).copy(alpha = 0.65F),
-                            1F to Color(0xFF30312D).copy(alpha = 1F)
+                            0.15F to tabBackgroundColor.copy(alpha = 0.95F),
+                            1F to tabBackgroundColor.copy(alpha = 1F)
                         )
                     )
             )
